@@ -1,0 +1,71 @@
+<!-- This is template inheritence from base.html -->
+{% extends 'ems/base.html' %}
+
+{% block title %}
+Update Employee Data
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="container">
+        {% for message in messages%}
+        <div id="thank" class="my-3 text-center p-2 bg-success" style="border-radius: 18px;">
+            <h5 class="text-white">{{message}}</h5>
+        </div>
+        {% endfor %}
+        <h1 class="text-center mb-5">Update Employee</h1>
+        {% for emp in Employee %}
+        <form class="row g-3 " name="registerForm" onsubmit="return(homeValidate())" method="POST"
+            action="{% url  'update' emp.id %}">
+            {% csrf_token %}
+            <div class="col-md-6">
+                <label for="fname" class="form-label">First Name</label>
+                <input type="text" class="form-control" value="{{emp.EmployeeFirstName}}" name="fname" id="fname"
+                    required>
+            </div>
+            <div class="col-md-6">
+                <label for="lname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" value="{{emp.EmployeeLastName}}" name="lname" id="lname"
+                    required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="dob" class="form-label">Date Of Birth</label>
+                <input type="date" class="form-control" value="{{emp.EmployeeBirthdate}}" name="dob" id="dob"
+                    onclick="maxdate()" min="1920-01-01" required>
+            </div>
+            <div class="col-md-6">
+                <label for='num' class="form-label">Contact No.</label>
+                <input type="tel" class="form-control" value="{{emp.EmployeePhone_No}}" name="num" id="num" required>
+            </div>
+            <div class="col-md-6">
+                <label for='mail' class="form-label">Email</label>
+                <input type="email" class="form-control" value="{{emp.EmployeeEmail}}" name="mail" id="mail" required>
+            </div>
+            <div class="col-md-6">
+                <label for="role" class="form-label">Role</label>
+                <select id="role" name="role" class="form-select" required>
+                    <option value="{{emp.EmployeeRole}}">current - {{emp.EmployeeRole}}</option>
+                    <option value="Software Developer">Software Developer</option>
+                    <option value="Software Tester">Software Tester</option>
+                    <option value="Data analyst">Data analyst</option>
+                    <option value="Web developer">Web developer</option>
+                    <option value="System administrator">System administrator</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="inAddress" class="form-label">Location</label>
+                <input type="text" class="form-control" value="{{emp.EmployeeAddress}}" name="address" id="inAddress"
+                    placeholder="1234 Main St" required>
+            </div>
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <button type="submit" class="row col-4 text-light btn btn-outline-primary">Update</button>
+            </div>
+        </form>
+        {% endfor %}
+        <div class="container-fluid d-flex mt-5 justify-content-center">
+            <a class="btn btn-outline-primary" href="{% url 'management' %}">Go Back</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

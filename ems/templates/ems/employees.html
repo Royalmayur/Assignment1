@@ -1,0 +1,59 @@
+<!-- This is template inheritence from base.html -->
+{% extends 'ems/base.html' %}
+
+{% block title %}
+Manage Employees
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    {% for message in messages%}
+    <div id="thank" class="my-3 text-center p-2 bg-success" style="border-radius: 18px;">
+        <h5 class="text-white">{{message}}</h5>
+    </div>
+    {% endfor %}
+    <div>
+        <ul class=" rounded-top list-group list-group-flush">
+            {% for emp in Employee %}
+            <li class=" row list-group-item  d-flex align-items-center">
+                <span class="col-sm-12 col-md-6 col-lg-3">{{emp.EmployeeFirstName}} {{emp.EmployeeLastName}}</span>
+                <span class="col-sm-12 text-right col-md-4 col-lg-3">{{emp.EmployeeEmail}}</span>
+                <span class="col-sm-12 col-md-2 col-lg-3">Age : <span
+                        class="calcage">{{emp.EmployeeBirthdate}}</span></span>
+                <div class="col-sm-12 col-md-12 col-lg-3 d-flex justify-content-between">
+                    <a class='btn  btn-secondary' href="{% url 'updateEmployee' emp.id %}">Edit</a>
+                    <a href="{% url 'delEmployee' emp.id %}"
+                        onclick="return confirm('Are you sure to delete this employee?');"
+                        class="btn btn-danger">Delete</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="container mt-4 d-flex justify-content-center ">
+        <a class=" row col-4 btn btn-primary" href="{% url 'home' %}">Go Back</a>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+<script>
+    // This function is for automatically calculate age according to their DOB 
+    function calcAge() {
+        let today = new Date();
+        let cYear = today.getFullYear();
+        let dobs = document.querySelectorAll('.calcage');
+        dobs.forEach(db => {
+            let fullEmpDob = db.innerHTML;
+            let EmpDobYear = parseInt(fullEmpDob.slice(0, 4));
+            db.innerHTML = `${cYear - EmpDobYear}`;
+
+        })
+    }
+
+    document.querySelectorAll('.calcage').onload = calcAge();
+
+</script>
+{% endblock %}
