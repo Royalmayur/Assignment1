@@ -1,2 +1,2 @@
 # Assignments
-In this  assignments repository, Two assignments are there.  First assignment is the Django Based Web application and Second is 
+This my assignment number 1. and this is Employee Managment System Web application based on Django.
